@@ -20,21 +20,22 @@
 * portraitPath: 파일 시스템에 저장되어 있는 프사의 경로. 이 경로로 이미지를 retrieve해 온다.
 * charState: 캐릭터의 현재 상태(생존, 사망, 숨김 등). 관리자가 임의의 캐릭터를 숨김 처리할 수 있는가?
 
-## CharacterProfile
+## Profile
 
 * charID (FK): 캐릭터 테이블 JOIN용.
-* charProfileItem (PK): 프로필 항목.
+* charProfileItem (FK): 프로필 항목.
+* superItem: 소항목이 갖는 상위 항목.
 * charProfileSwitch: 항목의 공개 여부.
 * charProfileContents: 항목의 내용.
 
-## CharacterProfileConfig
+## ProfileConfig
 
-* charProfileItem (FK): 캐릭터 프로필 테이블 JOIN용.
+* charProfileItem (FK): 해당 항목 설정을 갖고 있는 프로필.
 * charProfileWhitelist: 항목 공개 대상 캐릭터의 charID.
 
-## CharacterProfileRelation
+## ProfileRelation
 
-* charProfileItem (FK): 캐릭터 프로필 테이블 JOIN용.
+* charProfileItem (FK): 해당 항목 관계를 갖고 있는 프로필.
 * charProfileTarget: 관계 항목의 대상 캐릭터의 charID.
 
 ## Thread
