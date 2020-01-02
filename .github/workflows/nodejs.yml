@@ -1,0 +1,26 @@
+name: Node.js CI/CD
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-test-${{ matrix.node-version }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-test-${{ matrix.node-version }}-
+            ${{ runner.OS }}-test-
+            ${{ runner.OS }}-
+      - name: yarn install
+        run: yarn
+      - name: Test
+        run: yarn test

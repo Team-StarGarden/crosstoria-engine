@@ -1,0 +1,21 @@
+{
+  "name": "crosstoria-engine",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "repository": "https://github.com/Team-StarGarden/crosstoria-engine.git",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "typescript": "^3.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/node": "^12.12.22",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0"
+  }
+}
