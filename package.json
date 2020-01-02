@@ -1,0 +1,7 @@
+{
+  "name": "crosstoria-engine",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "repository": "https://github.com/Team-StarGarden/crosstoria-engine.git",
+  "private": true
+}
