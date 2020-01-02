@@ -3,5 +3,15 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "repository": "https://github.com/Team-StarGarden/crosstoria-engine.git",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node ."
+  },
+  "dependencies": {
+    "typescript": "^3.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.22"
+  }
 }

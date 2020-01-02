@@ -281,3 +281,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# TypeScript Built file
+dist/
