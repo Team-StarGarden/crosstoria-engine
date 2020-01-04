@@ -4,6 +4,7 @@ import {EnvironmentVariables} from './environment-variables';
 export class Config {
   @IsNumber()
   public readonly port: number;
+
   @IsOptional()
   @IsString()
   public readonly host?: string;
