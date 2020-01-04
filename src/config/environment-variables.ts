@@ -11,7 +11,7 @@ export class EnvironmentVariables {
   @IsString()
   public readonly HOST?: string;
 
-  constructor(customConfig?: object) {
+  constructor(customConfig?: Record<string, string>) {
     const dotEnvFile = resolve(process.cwd(), '.env');
     Object.assign(this, {
       ...process.env,
