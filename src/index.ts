@@ -1,22 +1,39 @@
-import express, {json, Request, Response} from 'express';
-import BaseRouter from './routers';
+import express, { json, Request, Response } from "express";
+import BaseRouter from "./routers";
 
-const app = express();
+import { createConnection } from "typeorm";
+import "reflect-metadata";
 
-app.use(json());
+createConnection({
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "root",
+  password: "admin",
+  database: "crosstoria",
+  entities: ["./entity/*.ts"],
+  synchronize: true,
+  logging: false
+})
+  .then(async connection => {
+    const app = express();
 
-app.get('/', (req: Request, res: Response) => {
-  res.send({
-    msg: 'Hello, World!',
-  });
-});
+    app.use(json());
 
-//set Router
-app.use("/api", BaseRouter);
-app.get("*", (req: Request, res: Response) => {
-  res.status(404).send({ error: "Not Found" });
-});
+    app.get("/", (req: Request, res: Response) => {
+      res.send({
+        msg: "Hello, World!"
+      });
+    });
 
-app.listen(3000, () => {
-  console.log('Crosstoria Engine is Listening...');
-});
+    //set Router
+    app.use("/api", BaseRouter);
+    app.get("*", (req: Request, res: Response) => {
+      res.status(404).send({ error: "Not Found" });
+    });
+
+    app.listen(3000, () => {
+      console.log("Crosstoria Engine is Listening...");
+    });
+  })
+  .catch(error => console.log(error));
