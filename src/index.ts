@@ -5,15 +5,19 @@ import { createConnection } from "typeorm";
 import "reflect-metadata";
 
 createConnection({
-  type: "mysql",
+  type: "mariadb",
   host: "localhost",
   port: 3306,
   username: "root",
   password: "admin",
   database: "crosstoria",
   entities: ["./entity/*.ts"],
+  migrations : ["./migration/*.ts"],
   synchronize: true,
-  logging: false
+  logging: false,
+  cli:{
+    migrationsDir:'migration'
+  }
 })
   .then(async connection => {
     const app = express();

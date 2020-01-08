@@ -7,15 +7,15 @@ export class Users {
   @Column()
   public passpharse: number = 0;
   @Column()
-  public username:string='';
+  public username: string = "";
   @Column()
   public email: string = "";
   @Column()
   public age: number = 0;
   @Column()
-  public gender: string = '';
+  public gender: string = "";
   @Column()
-  public openGender : boolean = false;
+  public openGender: boolean = false;
   @Column()
   public userState: string = "";
   @Column({ default: null, nullable: true })
