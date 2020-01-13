@@ -3,21 +3,19 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity()
 export class Users {
   @PrimaryColumn()
-  userID!: string;
-  @Column()
-  passpharse!: number;
-  @Column()
-  username!: string;
-  @Column()
   email!: string;
+  @Column({ default: null, nullable: true, type: String })
+  passpharse?: string | null;
+  @Column()
+  userName!: string;
   @Column()
   age!: number;
   @Column()
   gender!: string;
-  @Column()
+  @Column({ default: false })
   openGender!: boolean;
   @Column()
   userState!: string;
-  @Column({ default: null, nullable: true, type:Date })
+  @Column({ default: null, nullable: true, type: Date })
   pendingDate?: Date | null;
 }

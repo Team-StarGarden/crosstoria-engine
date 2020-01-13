@@ -284,3 +284,6 @@ dist
 
 # TypeScript Built file
 dist/
+
+# Typeorm migration datas
+migration/
