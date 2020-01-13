@@ -19,5 +19,5 @@ export class Users {
   @Column()
   public userState: string = "";
   @Column({ default: null, nullable: true })
-  public pendingDate: Date | null = null;
+  public pendingDate: string = "";
 }
