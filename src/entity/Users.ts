@@ -3,21 +3,21 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity()
 export class Users {
   @PrimaryColumn()
-  public userID: string = "";
+  userID!: string;
   @Column()
-  public passpharse: number = 0;
+  passpharse!: number;
   @Column()
-  public username: string = "";
+  username!: string;
   @Column()
-  public email: string = "";
+  email!: string;
   @Column()
-  public age: number = 0;
+  age!: number;
   @Column()
-  public gender: string = "";
+  gender!: string;
   @Column()
-  public openGender: boolean = false;
+  openGender!: boolean;
   @Column()
-  public userState: string = "";
-  @Column({ default: null, nullable: true })
-  public pendingDate: string = "";
+  userState!: string;
+  @Column({ default: null, nullable: true, type:Date })
+  pendingDate?: Date | null;
 }
