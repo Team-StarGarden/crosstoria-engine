@@ -4,21 +4,29 @@
    "port": 3306,
    "username": "test",
    "password": "test",
-   "database": "test",
+   "database": "crosstoria",
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "dist/entity/*.ts",
+      "dist/entity/*.js"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+      "dist/migration/*.ts",
+      "dist/migration/*.js"
    ],
    "subscribers": [
-      "src/subscriber/**/*.ts"
+      "dist/subscriber/*.ts",
+      "dist/subscriber/*.js"
    ],
    "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-   }
+      "entitiesDir": "./src/entity",
+      "migrationsDir": "./src/migration",
+      "subscribersDir": "./src/subscriber"
+   },
+   "migrationRun": true,
+   "autoSchemaSync": true,
+   "migration":"generate",
+   "schema":"sync"
+
 }

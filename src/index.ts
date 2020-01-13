@@ -3,23 +3,26 @@ import BaseRouter from "./routers";
 
 import { createConnection } from "typeorm";
 import "reflect-metadata";
+import { generateKeyPair } from "crypto";
 
-createConnection({
+const connection = createConnection({
   type: "mariadb",
   host: "localhost",
   port: 3306,
-  username: "root",
-  password: "admin",
+  username: "test",
+  password: "test",
   database: "crosstoria",
-  entities: ["./entity/*.ts"],
-  migrations : ["./migration/*.ts"],
+  entities: ["entity/*.ts"],
+  migrations: ["./migration/*.ts"],
+  migrationsRun: true,
   synchronize: true,
   logging: false,
-  cli:{
-    migrationsDir:'migration'
+  cli: {
+    migrationsDir: "migration"
   }
 })
   .then(async connection => {
+    connection.synchronize();
     const app = express();
 
     app.use(json());
