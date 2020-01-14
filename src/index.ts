@@ -8,17 +8,11 @@ import "reflect-metadata";
 import { generateKeyPair } from "crypto";
 
 const cornsOptions: cors.CorsOptions = {
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "X-Access-Token"
-  ],
-  // credentials: true,
+  credentials: true,
+  origin:true,
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-  origin: "http://localhost:3000",
-  preflightContinue: false
+  optionsSuccessStatus: 200,
+  maxAge:3600
 };
 
 export const connection = createConnection({
