@@ -1,11 +1,27 @@
 import express, { json, Request, Response } from "express";
 import BaseRouter from "./routers";
 
+import cors from "cors";
 import { createConnection } from "typeorm";
 import "reflect-metadata";
+
 import { generateKeyPair } from "crypto";
 
-const connection = createConnection({
+const cornsOptions: cors.CorsOptions = {
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "X-Access-Token"
+  ],
+  // credentials: true,
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  origin: "http://localhost:3000",
+  preflightContinue: false
+};
+
+export const connection = createConnection({
   type: "mariadb",
   host: "localhost",
   port: 3306,
@@ -24,7 +40,7 @@ const connection = createConnection({
   .then(async connection => {
     connection.synchronize();
     const app = express();
-
+    app.use(cors(cornsOptions));
     app.use(json());
 
     app.get("/", (req: Request, res: Response) => {
@@ -33,6 +49,7 @@ const connection = createConnection({
       });
     });
 
+    app.use("*", cors(cornsOptions));
     //set Router
     app.use("/api", BaseRouter);
     app.get("*", (req: Request, res: Response) => {
