@@ -1,5 +1,6 @@
-import express, { json, Request, Response } from "express";
+import express, {json, Request, Response} from 'express';
 import BaseRouter from "./routers";
+import {config} from './config';
 
 import cors from "cors";
 import { createConnection } from "typeorm";
@@ -50,7 +51,7 @@ export const connection = createConnection({
       res.status(404).send({ error: "Not Found" });
     });
 
-    app.listen(3000, () => {
+    app.listen(config.port, (): void => {
       console.log("Crosstoria Engine is Listening...");
     });
   })

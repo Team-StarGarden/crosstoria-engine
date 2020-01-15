@@ -285,5 +285,9 @@ dist
 # TypeScript Built file
 dist/
 
+# dotenv
+*.env
+
 # Typeorm migration datas
 migration/
+
