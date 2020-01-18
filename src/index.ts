@@ -16,22 +16,7 @@ const cornsOptions: cors.CorsOptions = {
   maxAge:3600
 };
 
-export const connection = createConnection({
-  type: "mariadb",
-  host: "localhost",
-  port: 3306,
-  username: "test",
-  password: "test",
-  database: "crosstoria",
-  entities: ["entity/*.ts"],
-  migrations: ["./migration/*.ts"],
-  migrationsRun: true,
-  synchronize: true,
-  logging: false,
-  cli: {
-    migrationsDir: "migration"
-  }
-})
+export const connection = createConnection()
   .then(async connection => {
     connection.synchronize();
     const app = express();

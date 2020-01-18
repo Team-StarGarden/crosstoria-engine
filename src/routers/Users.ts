@@ -7,26 +7,38 @@ const router = Router();
 
 router.post("/register", async (req: Request, res: Response) => {
   let data = req.body;
-  console.log(data)
+  console.log(data);
   if ("userName" in data && "email" in data && "age" in data) {
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Users)
-      .values({
-        email: data.email,
-        age: data.age,
-        userName: data.userName,
-        userState: "outstanding Authozation",
-        gender: "unSelected"
-      })
-      .execute()
-      .then(() => {
-        res.status(401).send({
-          result: "success"
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(Users)
+        .values({
+          email: data.email,
+          age: data.age,
+          userName: data.userName,
+          userState: "outstanding Authozation",
+          gender: "unSelected"
+        })
+        .execute()
+        .then(() => {
+          res.status(401).send({
+            result: "success"
+          });
+          //send settPassword E-mail
         });
-        //send settPassword E-mail
-      });
+    } catch (error) {
+      if (error.code == "ER_DUP_ENTRY") {
+        res.status(401).send({
+          error: "ER_DUP_ENTRY"
+        });
+      } else {
+        res.status(451).send({
+          error: "Unvalide"
+        });
+      }
+    }
   } else {
     res.status(401).send({
       error: "invalid_request"
@@ -37,9 +49,9 @@ router.get("/availableID", async (req: Request, res: Response) => {
   let ID = req.body.id;
   let idCount = await getConnection()
     .createQueryBuilder()
-    .select("userID")
+    .select("email")
     .from(Users, "users")
-    .where("users.userID = :Id", { Id: ID })
+    .where("users.email = :Id", { Id: ID })
     .getCount();
   res.status(200).send(
     idCount == 0
@@ -58,9 +70,26 @@ router.post("/setPassword", async (req: Request, res: Response) => {
 });
 
 router.post("/authorize", async (req: Request, res: Response) => {
-  res.status(200).send({
-    result: "failed"
-  });
+  let email = req.body.email;
+  let password = req.body.pwd;
+  let count = await getConnection()
+    .createQueryBuilder()
+    .select("email")
+    .from(Users, "users")
+    .where("users.email = :email AND users.passpharse = :PassPharse", {
+      email: email,
+      PassPharse: null
+    })
+    .getCount();
+  if (count != 0) {
+    res.status(200).send({
+      result: "failed"
+    });
+  } else {
+    res.status(200).send({
+      result: "success"
+    });
+  }
 });
 
 export default router;

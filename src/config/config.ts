@@ -1,6 +1,7 @@
 import {IsNumber, IsOptional, IsString} from 'class-validator';
 import {EnvironmentVariables} from './environment-variables';
 
+// tempCode 
 export class Config {
   @IsNumber()
   public readonly port: number;
@@ -9,7 +10,7 @@ export class Config {
   @IsString()
   public readonly host?: string;
 
-  constructor(customConfig?: object) {
+  constructor(customConfig?: Record<string,string>) {
     const env = new EnvironmentVariables(customConfig);
     this.port = parseInt(env.PORT);
     this.host = env.HOST;
