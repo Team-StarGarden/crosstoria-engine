@@ -287,3 +287,7 @@ dist/
 
 # dotenv
 *.env
+
+# Typeorm migration datas
+migration/
+
