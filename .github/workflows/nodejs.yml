@@ -33,5 +33,3 @@ jobs:
         run: yarn
       - name: Test
         run: yarn test
-        env:
-          TYPEORM_PORT: ${{ job.services.mariadb.ports[3306] }}
