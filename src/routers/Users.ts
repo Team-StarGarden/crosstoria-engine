@@ -21,13 +21,11 @@ router.post('/register', async (req: Request, res: Response) => {
         userState: 'outstanding Authozation',
         gender: 'unSelected',
       })
-      .execute()
-      .then(() => {
-        res.status(401).send({
-          result: 'success',
-        });
-        //send settPassword E-mail
+      .execute();
+      res.status(401).send({
+        result: 'success',
       });
+      // TODO: send Password initializing E-mail
     } catch (error) {
       if (error.code == 'ER_DUP_ENTRY') {
         res.status(401).send({
@@ -35,7 +33,7 @@ router.post('/register', async (req: Request, res: Response) => {
         });
       } else {
         res.status(451).send({
-          error: 'Unvalide',
+          error: 'invalid',
         });
       }
     }
@@ -45,6 +43,7 @@ router.post('/register', async (req: Request, res: Response) => {
     });
   }
 });
+
 router.get('/availableID', async (req: Request, res: Response) => {
   let ID = req.body.id;
   let idCount = await getConnection()
@@ -56,13 +55,14 @@ router.get('/availableID', async (req: Request, res: Response) => {
   res.status(200).send(
     idCount == 0
       ? {
-        result: 'valiable',
+        result: 'valid',
       }
       : {
         result: 'unavailable',
       },
   );
 });
+
 router.post('/setPassword', async (req: Request, res: Response) => {
   res.status(401).send({
     error: 'Not Defined',
@@ -76,9 +76,9 @@ router.post('/authorize', async (req: Request, res: Response) => {
   .createQueryBuilder()
   .select('email')
   .from(Users, 'users')
-  .where('users.email = :email AND users.passpharse = :PassPharse', {
+  .where('users.email = :email AND users.passphrase = :PassPhrase', {
     email: email,
-    PassPharse: null,
+    PassPhrase: null,
   })
   .getCount();
   if (count != 0) {
