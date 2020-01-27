@@ -10,8 +10,8 @@ jobs:
         ports:
           - 3306
         env:
-          MYSQL_USER: test
-          MYSQL_PASSWORD: test
+          MYSQL_USER: crosstoria
+          MYSQL_PASSWORD: P@ssw0rd
           MYSQL_DATABASE: crosstoria
     steps:
       - uses: actions/checkout@v1
@@ -33,3 +33,9 @@ jobs:
         run: yarn
       - name: Test
         run: yarn test
+        env:
+          TYPEORM_HOST: localhost
+          TYPEORM_PORT: 3306
+          TYPEORM_USER: crosstoria
+          TYPEORM_PASS: P@ssw0rd
+          TYPEORM_DB: crosstoria
