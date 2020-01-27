@@ -1,19 +1,19 @@
-import { Entity, PrimaryColumn, Column, JoinColumn, ManyToOne } from "typeorm";
-import { Users } from "./Users";
+import {Column, Entity, ManyToOne, PrimaryColumn} from 'typeorm';
+import {Users} from './Users';
 
 @Entity()
 export class Character {
   @PrimaryColumn()
   charID!: string;
   @ManyToOne(
-    type => Users,
-    userID => userID.email
+    () => Users,
+    userID => userID.email,
   )
   userID?: Users;
   @Column()
-  charName!: string; //must support UNICODE
-  @Column({ type: String })
-  protraitPath!: string;
+  charName!: string; // must support UNICODE
+  @Column({type: String})
+  portraitPath!: string;
   @Column()
   charState!: string;
 }

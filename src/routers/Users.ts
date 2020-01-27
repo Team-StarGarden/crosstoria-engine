@@ -1,93 +1,93 @@
-import { Request, Response, Router, Express } from "express";
-import { getConnection } from "typeorm";
-import { Users } from "../entity/Users";
+import {Request, Response, Router} from 'express';
+import {getConnection} from 'typeorm';
+import {Users} from '../entity/Users';
 
 // Init shared
 const router = Router();
 
-router.post("/register", async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   let data = req.body;
   console.log(data);
-  if ("userName" in data && "email" in data && "age" in data) {
+  if ('userName' in data && 'email' in data && 'age' in data) {
     try {
       await getConnection()
-        .createQueryBuilder()
-        .insert()
-        .into(Users)
-        .values({
-          email: data.email,
-          age: data.age,
-          userName: data.userName,
-          userState: "outstanding Authozation",
-          gender: "unSelected"
-        })
-        .execute()
-        .then(() => {
-          res.status(401).send({
-            result: "success"
-          });
-          //send settPassword E-mail
-        });
-    } catch (error) {
-      if (error.code == "ER_DUP_ENTRY") {
+      .createQueryBuilder()
+      .insert()
+      .into(Users)
+      .values({
+        email: data.email,
+        age: data.age,
+        userName: data.userName,
+        userState: 'outstanding Authozation',
+        gender: 'unSelected',
+      })
+      .execute()
+      .then(() => {
         res.status(401).send({
-          error: "ER_DUP_ENTRY"
+          result: 'success',
+        });
+        //send settPassword E-mail
+      });
+    } catch (error) {
+      if (error.code == 'ER_DUP_ENTRY') {
+        res.status(401).send({
+          error: 'ER_DUP_ENTRY',
         });
       } else {
         res.status(451).send({
-          error: "Unvalide"
+          error: 'Unvalide',
         });
       }
     }
   } else {
     res.status(401).send({
-      error: "invalid_request"
+      error: 'invalid_request',
     });
   }
 });
-router.get("/availableID", async (req: Request, res: Response) => {
+router.get('/availableID', async (req: Request, res: Response) => {
   let ID = req.body.id;
   let idCount = await getConnection()
-    .createQueryBuilder()
-    .select("email")
-    .from(Users, "users")
-    .where("users.email = :Id", { Id: ID })
-    .getCount();
+  .createQueryBuilder()
+  .select('email')
+  .from(Users, 'users')
+  .where('users.email = :Id', {Id: ID})
+  .getCount();
   res.status(200).send(
     idCount == 0
       ? {
-          result: "valiable"
-        }
+        result: 'valiable',
+      }
       : {
-          result: "unavailable"
-        }
+        result: 'unavailable',
+      },
   );
 });
-router.post("/setPassword", async (req: Request, res: Response) => {
+router.post('/setPassword', async (req: Request, res: Response) => {
   res.status(401).send({
-    error: "Not Defined"
+    error: 'Not Defined',
   });
 });
 
-router.post("/authorize", async (req: Request, res: Response) => {
+router.post('/authorize', async (req: Request, res: Response) => {
   let email = req.body.email;
   let password = req.body.pwd;
   let count = await getConnection()
-    .createQueryBuilder()
-    .select("email")
-    .from(Users, "users")
-    .where("users.email = :email AND users.passpharse = :PassPharse", {
-      email: email,
-      PassPharse: null
-    })
-    .getCount();
+  .createQueryBuilder()
+  .select('email')
+  .from(Users, 'users')
+  .where('users.email = :email AND users.passpharse = :PassPharse', {
+    email: email,
+    PassPharse: null,
+  })
+  .getCount();
   if (count != 0) {
     res.status(200).send({
-      result: "failed"
+      result: 'failed',
     });
   } else {
     res.status(200).send({
-      result: "success"
+      result: 'success',
     });
   }
 });
