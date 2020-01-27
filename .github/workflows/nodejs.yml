@@ -4,6 +4,15 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:latest
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
+          MYSQL_DATABASE: crosstoria
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 12
@@ -24,3 +33,5 @@ jobs:
         run: yarn
       - name: Test
         run: yarn test
+        env:
+          TYPEORM_PORT: ${{ job.services.mariadb.ports[3306] }}
