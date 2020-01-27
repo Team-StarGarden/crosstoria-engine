@@ -8,7 +8,7 @@ jobs:
       mariadb:
         image: mariadb:latest
         ports:
-          - 3306
+          - 3306:3306
         env:
           MYSQL_USER: crosstoria
           MYSQL_PASSWORD: P@ssw0rd
@@ -35,7 +35,7 @@ jobs:
         run: yarn test
         env:
           TYPEORM_HOST: 127.0.0.1
-          TYPEORM_PORT: ${{ job.services.mariadb.ports[3306] }}
+          TYPEORM_PORT: 3306
           TYPEORM_USER: crosstoria
           TYPEORM_PASS: P@ssw0rd
           TYPEORM_DB: crosstoria
