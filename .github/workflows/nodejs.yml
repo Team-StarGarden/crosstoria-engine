@@ -34,8 +34,8 @@ jobs:
       - name: Test
         run: yarn test
         env:
-          TYPEORM_HOST: localhost
-          TYPEORM_PORT: 3306
+          TYPEORM_HOST: 127.0.0.1
+          TYPEORM_PORT: ${{ job.services.mariadb.ports[3306] }}
           TYPEORM_USER: crosstoria
           TYPEORM_PASS: P@ssw0rd
           TYPEORM_DB: crosstoria
