@@ -7,13 +7,13 @@ export class Character {
   charID!: string;
   @ManyToOne(
     () => Users,
-    userID => userID.email,
+    userID => userID.userID,
   )
   userID?: Users;
   @Column()
   charName!: string; // must support UNICODE
   @Column({type: String})
-  portraitPath!: string;
+  portraitPath!: string; // path in local file system
   @Column()
   charState!: string;
 }
