@@ -10,7 +10,7 @@ export class Config {
   @IsString()
   public readonly host?: string;
 
-  constructor(customConfig?: Record<string,string>) {
+  constructor(customConfig?: Record<string, string>) {
     const env = new EnvironmentVariables(customConfig);
     this.port = parseInt(env.PORT);
     this.host = env.HOST;
