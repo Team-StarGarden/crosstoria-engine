@@ -7,21 +7,20 @@ const router = Router();
 
 router.post('/register', async (req: Request, res: Response) => {
   let data = req.body;
-  console.log(data);
   if ('userName' in data && 'email' in data && 'age' in data) {
     try {
       await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Users)
-      .values({
-        email: data.email,
-        age: data.age,
-        userName: data.userName,
-        userState: 'outstanding Authozation',
-        gender: 'unSelected',
-      })
-      .execute();
+        .createQueryBuilder()
+        .insert()
+        .into(Users)
+        .values({
+          email: data.email,
+          age: data.age,
+          userName: data.userName,
+          userState: 'outstanding Authozation',
+          gender: 'unSelected',
+        })
+        .execute();
       res.status(401).send({
         result: 'success',
       });
@@ -45,21 +44,24 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 router.get('/availableID', async (req: Request, res: Response) => {
-  let ID = req.body.id;
-  let idCount = await getConnection()
-  .createQueryBuilder()
-  .select('email')
-  .from(Users, 'users')
-  .where('users.email = :Id', {Id: ID})
-  .getCount();
+  let idCount = 1;
+  if ('id' in req.body) {
+    let ID = req.body.id;
+    idCount = await getConnection()
+      .createQueryBuilder()
+      .select('email')
+      .from(Users, 'users')
+      .where('users.email = :Id', {Id: ID})
+      .getCount();
+  }
   res.status(200).send(
     idCount == 0
       ? {
-        result: 'valid',
-      }
+          result: 'valid',
+        }
       : {
-        result: 'unavailable',
-      },
+          result: 'unavailable',
+        },
   );
 });
 
@@ -70,22 +72,27 @@ router.post('/setPassword', async (req: Request, res: Response) => {
 });
 
 router.post('/authorize', async (req: Request, res: Response) => {
-  let email = req.body.email;
-  let password = req.body.pwd;
-  let count = await getConnection()
-  .createQueryBuilder()
-  .select('email')
-  .from(Users, 'users')
-  .where('users.email = :email AND users.passphrase = :PassPhrase', {
-    email: email,
-    PassPhrase: null,
-  })
-  .getCount();
-  if (count != 0) {
+  let item = null;
+  if ('email' in req.body && 'pwd' in req.body) {
+    let email = req.body.email;
+    let pwd = req.body.pwd;
+    item = await getConnection()
+      .createQueryBuilder()
+      .select('*')
+      .from(Users, 'users')
+      .where('users.email = :Email and users.passpharse = :Passpharse', {
+        Email: email,
+        Passpharse: pwd,
+      })
+      .getRawOne();
+  }
+  if (!item) {
     res.status(200).send({
       result: 'failed',
     });
   } else {
+    req.session!.user = item.userName;
+    req.session!.userState = item.userState;
     res.status(200).send({
       result: 'success',
     });
