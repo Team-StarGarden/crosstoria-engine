@@ -4,15 +4,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      mariadb:
-        image: mariadb:latest
-        ports:
-          - 3307:3306
-        env:
-          MYSQL_USER: crosstoria
-          MYSQL_PASSWORD: P@ssw0rd
-          MYSQL_DATABASE: crosstoria
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 12
@@ -29,6 +20,11 @@ jobs:
             ${{ runner.OS }}-test-${{ matrix.node-version }}-
             ${{ runner.OS }}-test-
             ${{ runner.OS }}-
+      - uses: getong/mariadb-action@v1.1
+        with:
+          mysql database: crosstoria
+          mysql user: crosstoria
+          mysql password: P@ssw0rd
       - name: yarn install
         run: yarn
       - name: Test
