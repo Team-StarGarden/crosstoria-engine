@@ -21,7 +21,7 @@ jobs:
             ${{ runner.OS }}-test-
             ${{ runner.OS }}-
       - name: Create DB
-        run: mysql -u root -p root -e 'CREATE DATABASE crosstoria;'
+        run: mysql --user=root --password=root -e 'CREATE DATABASE crosstoria;'
       - name: yarn install
         run: yarn
       - name: Test
