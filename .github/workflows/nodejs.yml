@@ -4,16 +4,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mariadb:latest
-        ports:
-          - 3306/tcp
-        env:
-          MYSQL_USER: crosstoria
-          MYSQL_PASSWORD: P@ssw0rd
-          MYSQL_DATABASE: crosstoria
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 12
@@ -30,13 +20,15 @@ jobs:
             ${{ runner.OS }}-test-${{ matrix.node-version }}-
             ${{ runner.OS }}-test-
             ${{ runner.OS }}-
+      - name: Create DB
+        run: mysql -u root -p root -e 'CREATE DATABASE crosstoria;'
       - name: yarn install
         run: yarn
       - name: Test
         run: yarn test
         env:
           TYPEORM_HOST: 127.0.0.1
-          TYPEORM_PORT: ${{ job.services.mysql.ports['3306'] }}
-          TYPEORM_USER: crosstoria
-          TYPEORM_PASS: P@ssw0rd
+          TYPEORM_PORT: 3306
+          TYPEORM_USER: root
+          TYPEORM_PASS: root
           TYPEORM_DB: crosstoria
