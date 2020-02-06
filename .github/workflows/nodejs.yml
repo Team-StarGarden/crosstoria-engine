@@ -13,6 +13,7 @@ jobs:
           MYSQL_USER: crosstoria
           MYSQL_PASSWORD: P@ssw0rd
           MYSQL_DATABASE: crosstoria
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 12
