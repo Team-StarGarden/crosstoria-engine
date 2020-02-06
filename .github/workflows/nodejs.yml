@@ -5,10 +5,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      mariadb:
+      mysql:
         image: mariadb:latest
         ports:
-          - 3306
+          - 3306/tcp
         env:
           MYSQL_USER: crosstoria
           MYSQL_PASSWORD: P@ssw0rd
