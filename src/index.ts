@@ -16,7 +16,7 @@ const cornsOptions: cors.CorsOptions = {
 
 export const connection = createConnection()
   .then(async connection => {
-    connection.synchronize();
+    await connection.synchronize();
     const app = express();
     app.use(cors(cornsOptions));
     app.use(json());
@@ -32,7 +32,7 @@ export const connection = createConnection()
         msg: 'Hello, World!',
       });
     });
-
+    
     app.use('*', cors(cornsOptions));
     //set Router
     app.use('/api', BaseRouter);

@@ -291,3 +291,8 @@ dist/
 # Typeorm migration datas
 migration/
 
+# Yarn 2
+.yarn/
+
+# Yarn  PnP
+.pnp.js
