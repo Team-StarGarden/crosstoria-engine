@@ -9,13 +9,15 @@ export class Profile {
   )
   charID!: Character;
   @Column({unique: true})
-  charProgileItem!: string;
+  charProfileItem!: string;
   @Column()
-  progileItemName!: string;
+  profileItemName!: string;
   @PrimaryGeneratedColumn('uuid')
   profileItem!: string;
   @Column()
   profileContent!: string;
+  @Column({nullable: true, type: String})
+  superItem!: string | null;
   @Column()
   charProfileSwitch!: boolean;
   @Column({nullable: true, type: String})
