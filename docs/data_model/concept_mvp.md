@@ -22,8 +22,8 @@
 ## Profile
 
 * charID (FK): 캐릭터 테이블 JOIN용.
-* charProfileItem (FK): 프로필 항목.
-* superItem: 소항목이 갖는 상위 항목.
+* charProfileItem (PK): 프로필 항목.
+* superItem: 소항목이 갖는 상위 항목.( 상휘항목의 charProfileItem)
 * charProfileSwitch: 항목의 공개 여부.
 * charProfileContents: 항목의 내용.
 
