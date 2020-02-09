@@ -17,3 +17,4 @@ router.get('userList', async (res: Response, req: Request) => {
     .from(Users, 'users');
   res.status(20).send({data});
 });
+export default router;
