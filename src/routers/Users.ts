@@ -5,10 +5,20 @@ import {Users} from '../entity/Users';
 // Init shared
 const router = Router();
 
+function filter(str: string): string {
+  return str
+    .split("'")
+    .join('')
+    .split("/'")
+    .join('')
+    .split("'/")
+    .join('');
+}
 router.get('/availableID', async (req: Request, res: Response) => {
   let idCount = 1;
   if ('id' in req.body) {
-    let ID = req.body.id;
+    const ID = filter(req.body.id);
+
     idCount = await getConnection()
       .createQueryBuilder()
       .select('email')
@@ -27,13 +37,21 @@ router.get('/availableID', async (req: Request, res: Response) => {
   );
 });
 
+router.get('/sign-out', (req: Request, res: Response) => {
+  delete req.session!.user;
+  delete req.session!.email;
+  delete req.session!.userState;
+  delete req.session!.isAdmin;
+  res.status(200).send(null);
+});
+
 router.get('/userInfo', async (req: Request, res: Response) => {
   if ('email' in req.body) {
     const item = await getConnection()
       .createQueryBuilder()
       .select('*')
       .from(Users, 'users')
-      .where('users.email = :Email', {Email: req.body.email})
+      .where('users.email = :Email', {Email: filter(req.body.email)})
       .getRawOne();
     if (!item) {
       res.status(404).send({error: 'NotFound'});
@@ -53,8 +71,8 @@ router.get('/userInfo', async (req: Request, res: Response) => {
 router.post('/authorize', async (req: Request, res: Response) => {
   let item = null;
   if ('email' in req.body && 'pwd' in req.body) {
-    let email = req.body.email;
-    let pwd = req.body.pwd;
+    const email = filter(req.body.email);
+    const pwd = filter(req.body.pwd);
     item = await getConnection()
       .createQueryBuilder()
       .select('*')
@@ -73,6 +91,7 @@ router.post('/authorize', async (req: Request, res: Response) => {
     req.session!.email = item.email;
     req.session!.user = item.userName;
     req.session!.userState = item.userState;
+    req.session!.isAdmin = false;
     res.status(200).send({
       result: 'success',
     });
@@ -80,7 +99,7 @@ router.post('/authorize', async (req: Request, res: Response) => {
 });
 
 router.post('/register', async (req: Request, res: Response) => {
-  let data = req.body;
+  const data = req.body;
   if ('userName' in data && 'email' in data && 'age' in data) {
     try {
       await getConnection()
@@ -88,9 +107,9 @@ router.post('/register', async (req: Request, res: Response) => {
         .insert()
         .into(Users)
         .values({
-          email: data.email,
-          age: data.age,
-          userName: data.userName,
+          email: filter(data.email),
+          age: parseInt(data.age),
+          userName: filter(data.userName),
           userState: 'outstanding Authozation',
           gender: 'unSelected',
         })
@@ -117,7 +136,7 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/setPassword', async (req: Request, res: Response) => {
+router.post('/setPassword', (req: Request, res: Response) => {
   if ('email' in req.session! && 'users' in req.session!) {
     if ('newpwd' in req.body) {
       res.status(404).send({error: 'Not defined'});
@@ -132,7 +151,7 @@ router.post('/setPassword', async (req: Request, res: Response) => {
 });
 
 router.post('/update', async (req: Request, res: Response) => {
-  let data = req.body;
+  const data = req.body;
   if ('age' in data && 'gender' in data && 'userName' in data) {
     try {
       console.log(req.session!.user);
