@@ -88,5 +88,3 @@ export const authorize = async (req: Request, res: Response) => {
         });
     }
 };
-
-export default router;

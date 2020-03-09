@@ -1,6 +1,5 @@
 import express, { json, Request, Response } from 'express';
 import BaseRouter from './apis';
-import * as bodyParser from 'body-parser';
 import { config } from './config';
 
 import cors from 'cors';
@@ -15,28 +14,26 @@ const corsOptions: cors.CorsOptions = {
     maxAge: 3600
 };
 
+export const app = express();
+app.use(cors(corsOptions));
+app.use(json());
+
+app.get('/', (req: Request, res: Response) => {
+    res.send({
+        msg: 'Hello, World!'
+    });
+});
+
+app.use('*', cors(corsOptions));
+//set Router
+app.use('/api', BaseRouter);
+app.get('*', (req: Request, res: Response) => {
+    res.status(404).send({ error: 'Not Found' });
+});
+
 export const connection = createConnection()
     .then(async connection => {
         await connection.synchronize();
-        const app = express();
-        app.use(cors(corsOptions));
-        app.use(json());
-
-        app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({ extended: true }));
-
-        app.get('/', (req: Request, res: Response) => {
-            res.send({
-                msg: 'Hello, World!'
-            });
-        });
-
-        app.use('*', cors(corsOptions));
-        //set Router
-        app.use('/api', BaseRouter);
-        app.get('*', (req: Request, res: Response) => {
-            res.status(404).send({ error: 'Not Found' });
-        });
 
         app.listen(config.port, (): void => {
             console.log('Crosstoria Engine is Listening...');
