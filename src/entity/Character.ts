@@ -7,9 +7,9 @@ export class Character {
   charID!: string;
   @ManyToOne(
     () => Users,
-    userID => userID.userID
+    user => user.userID
   )
-  userID?: Users;
+  userID?: string;
   @Column()
   charName!: string; // must support UNICODE
   @Column({ type: String })

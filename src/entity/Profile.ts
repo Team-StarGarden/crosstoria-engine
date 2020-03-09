@@ -5,9 +5,9 @@ import { Character } from "./Character";
 export class Profile {
   @ManyToOne(
     () => Character,
-    charID => charID.charID
+    char => char.charID
   )
-  charID?: Character;
+  charID?: string;
   @PrimaryColumn()
   charProfileItem!: string;
   @Column()

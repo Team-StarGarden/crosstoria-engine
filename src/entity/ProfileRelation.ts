@@ -7,9 +7,9 @@ export class ProfileRelation {
   relationId!: string;
   @ManyToOne(
     () => Profile,
-    charProfileItem => charProfileItem.charProfileItem
+    char => char.charProfileItem
   )
-  charProfileItem?: Profile;
+  charProfileItem?: string;
   @Column({ default: null, nullable: true, type: String })
   charProfileTarget?: string | null;
 }
