@@ -7,7 +7,7 @@ export class Profile {
     () => Character,
     char => char.charID
   )
-  charID?: string;
+  charID?: Character;
   @PrimaryColumn()
   charProfileItem!: string;
   @Column()

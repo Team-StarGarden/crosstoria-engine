@@ -9,7 +9,7 @@ export class Character {
     () => Users,
     user => user.userID
   )
-  userID?: string;
+  userID?: Users;
   @Column()
   charName!: string; // must support UNICODE
   @Column({ type: String })

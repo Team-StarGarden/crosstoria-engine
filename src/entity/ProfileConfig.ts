@@ -2,14 +2,14 @@ import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Profile } from "./Profile";
 
 @Entity()
-export class ProfileRelation {
+export class ProfileConfig {
   @PrimaryColumn()
-  relationId!: string;
+  configId!: string;
   @ManyToOne(
     () => Profile,
     char => char.charProfileItem
   )
-  charProfileItem?: string;
+  charProfileItem?: Profile;
   @Column({ default: null, nullable: true, type: String })
-  charProfileTarget?: string | null;
+  charProfileWhitelist?: string | null;
 }

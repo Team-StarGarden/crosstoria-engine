@@ -1,32 +1,30 @@
 import { Request, Response } from "express";
 import { getConnection } from "typeorm";
 import { Users } from "../../entity/Users";
+import { insertUser } from "./user.func";
+import validateEmail from "../../util/EmailChecker";
 
 export const register = async (req: Request, res: Response) => {
   let data = req.body;
   console.log(data);
   if ("userName" in data && "email" in data && "age" in data) {
     try {
-      await getConnection()
-        .createQueryBuilder()
-        .insert()
-        .into(Users)
-        .values({
-          email: data.email,
-          age: data.age,
-          userName: data.userName,
-          userState: "outstanding Authozation",
-          gender: "unSelected"
-        })
-        .execute();
-      res.status(401).send({
+      if (!validateEmail(data.email)) {
+        throw new Error("BAD_REQUEST");
+      }
+      await insertUser(data);
+      res.status(200).send({
         result: "success"
       });
       // TODO: send Password initializing E-mail
     } catch (error) {
       if (error.code == "ER_DUP_ENTRY") {
-        res.status(401).send({
+        res.status(409).send({
           error: "ER_DUP_ENTRY"
+        });
+      } else if (error.code == "BAD_REQUEST") {
+        res.status(400).send({
+          error: "BAD_REQUEST"
         });
       } else {
         res.status(451).send({
@@ -35,7 +33,7 @@ export const register = async (req: Request, res: Response) => {
       }
     }
   } else {
-    res.status(401).send({
+    res.status(400).send({
       error: "invalid_request"
     });
   }

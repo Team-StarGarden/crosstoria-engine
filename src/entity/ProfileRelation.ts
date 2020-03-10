@@ -9,7 +9,7 @@ export class ProfileRelation {
     () => Profile,
     char => char.charProfileItem
   )
-  charProfileItem?: string;
+  charProfileItem?: Profile;
   @Column({ default: null, nullable: true, type: String })
   charProfileTarget?: string | null;
 }
