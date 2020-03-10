@@ -8,6 +8,7 @@ interface Data {
 }
 
 export const insertUser = (data: Data) => {
+  console.log("mock failed");
   return getConnection()
     .createQueryBuilder()
     .insert()
@@ -16,7 +17,7 @@ export const insertUser = (data: Data) => {
       email: data.email,
       age: data.age,
       userName: data.userName,
-      userState: "outstanding Authorization",
+      userState: "Outstanding Authorization",
       gender: "UNSELECTED"
     })
     .execute();

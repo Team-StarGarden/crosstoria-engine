@@ -6,10 +6,18 @@ import validateEmail from "../../util/EmailChecker";
 
 export const register = async (req: Request, res: Response) => {
   let data = req.body;
-  console.log(data);
   if ("userName" in data && "email" in data && "age" in data) {
     try {
+      //check for email form
       if (!validateEmail(data.email)) {
+        throw new Error("BAD_REQUEST");
+      }
+      //check for age
+      if (
+        !Number.isInteger(data.age) ||
+        data.age < 1 ||
+        data.age > 2 * 100000 * 10000
+      ) {
         throw new Error("BAD_REQUEST");
       }
       await insertUser(data);
@@ -18,11 +26,11 @@ export const register = async (req: Request, res: Response) => {
       });
       // TODO: send Password initializing E-mail
     } catch (error) {
-      if (error.code == "ER_DUP_ENTRY") {
+      if (error.message == "ER_DUP_ENTRY" || error.code == "ER_DUP_ENTRY") {
         res.status(409).send({
           error: "ER_DUP_ENTRY"
         });
-      } else if (error.code == "BAD_REQUEST") {
+      } else if (error.message == "BAD_REQUEST") {
         res.status(400).send({
           error: "BAD_REQUEST"
         });
