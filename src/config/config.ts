@@ -1,7 +1,7 @@
-import {IsNumber, IsOptional, IsString} from 'class-validator';
-import {EnvironmentVariables} from './environment-variables';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { EnvironmentVariables } from './environment-variables';
 
-// tempCode 
+// tempCode
 export class Config {
   @IsNumber()
   public readonly port: number;

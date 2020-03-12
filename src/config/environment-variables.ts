@@ -1,7 +1,7 @@
-import {IsNumberString, IsOptional, IsString, validateSync} from 'class-validator';
-import {existsSync, readFileSync} from 'fs';
-import {resolve} from 'path';
-import {parse} from 'dotenv';
+import { IsNumberString, IsOptional, IsString, validateSync } from 'class-validator';
+import { existsSync, readFileSync } from 'fs';
+import { resolve } from 'path';
+import { parse } from 'dotenv';
 
 export class EnvironmentVariables {
   @IsNumberString()

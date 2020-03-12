@@ -20,5 +20,13 @@ module.exports = {
     'jest',
   ],
   root: true,
-  rules: {},
+  rules: {
+    indent: ['error', 2, {
+      MemberExpression: 0,
+    }],
+    'no-await-in-loop': 'error',
+    'no-return-await': 'error',
+    'no-array-constructor': 'error',
+    eqeqeq: 'error',
+  },
 };

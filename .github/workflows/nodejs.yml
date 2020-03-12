@@ -25,6 +25,8 @@ jobs:
         run: mysql --user=root --password=root -e 'CREATE DATABASE crosstoria;'
       - name: yarn install
         run: yarn
+      - name: Check Code style
+        run: yarn lint
       - name: Test
         run: yarn test
         env:
