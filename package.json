@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "yarn tsc -p tsconfig.json",
-    "lint": "yarn eslint src/**/*",
+    "lint": "yarn eslint \"src/**/*\"",
     "lint-fix": "yarn lint --fix",
     "prestart": "yarn build",
     "start": "yarn start:prod",
