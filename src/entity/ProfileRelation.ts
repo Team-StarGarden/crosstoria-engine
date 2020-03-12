@@ -1,15 +1,15 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Profile } from './Profile';
+import { Character } from './Character';
 
 @Entity()
 export class ProfileRelation {
   @PrimaryColumn()
   relationId!: string;
-  @ManyToOne(
-    () => Profile,
-    char => char.charProfileItem,
-  )
+  @ManyToOne(() => Profile, (char) => char.charProfileItem)
   charProfileItem?: Profile;
-  @Column({ default: null, nullable: true, type: String })
-  charProfileTarget?: string | null;
+  @ManyToOne(() => Character, (charProfileTarget) => charProfileTarget.charID, {
+    nullable: true,
+  })
+  charProfileTarget!: Character | null;
 }

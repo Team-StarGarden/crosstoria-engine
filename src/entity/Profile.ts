@@ -3,10 +3,7 @@ import { Character } from './Character';
 
 @Entity()
 export class Profile {
-  @ManyToOne(
-    () => Character,
-    char => char.charID,
-  )
+  @ManyToOne(() => Character, char => char.charID)
   charID?: Character;
   @PrimaryColumn()
   charProfileItem!: string;
