@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { Users } from "./Users";
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Users } from './Users';
 
 @Entity()
 export class Character {
@@ -7,7 +7,7 @@ export class Character {
   charID!: string;
   @ManyToOne(
     () => Users,
-    user => user.userID
+    user => user.userID,
   )
   userID?: Users;
   @Column()

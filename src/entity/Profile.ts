@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { Character } from "./Character";
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Character } from './Character';
 
 @Entity()
 export class Profile {
   @ManyToOne(
     () => Character,
-    char => char.charID
+    char => char.charID,
   )
   charID?: Character;
   @PrimaryColumn()

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { register, availableID, setPassphrase, authorize } from './user.ctrl';
+import { authorize, availableID, register, setPassphrase } from './user.ctrl';
 
-export let UserRouter = Router();
+export const UserRouter = Router();
 
 UserRouter.post('/register', register);
 UserRouter.post('/availableID', availableID);

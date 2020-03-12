@@ -1,5 +1,5 @@
-import { getConnection } from "typeorm";
-import { Users } from "../../entity/Users";
+import { getConnection, InsertResult } from 'typeorm';
+import { Users } from '../../entity/Users';
 
 interface Data {
   email: string;
@@ -7,18 +7,18 @@ interface Data {
   userName: string;
 }
 
-export const insertUser = (data: Data) => {
-  console.log("mock failed");
+export const insertUser = (data: Data): Promise<InsertResult> => {
+  console.log('mock failed');
   return getConnection()
-    .createQueryBuilder()
-    .insert()
-    .into(Users)
-    .values({
-      email: data.email,
-      age: data.age,
-      userName: data.userName,
-      userState: "Outstanding Authorization",
-      gender: "UNSELECTED"
-    })
-    .execute();
+  .createQueryBuilder()
+  .insert()
+  .into(Users)
+  .values({
+    email: data.email,
+    age: data.age,
+    userName: data.userName,
+    userState: 'Outstanding Authorization',
+    gender: 'UNSELECTED',
+  })
+  .execute();
 };

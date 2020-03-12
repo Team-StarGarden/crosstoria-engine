@@ -1,6 +1,6 @@
-import { Connection, createConnection } from "typeorm";
+import { Connection, createConnection } from 'typeorm';
 
-describe("Sample Test", () => {
+describe('Sample Test', () => {
   let typeormConnection: Connection;
 
   beforeAll(async () => {
@@ -8,11 +8,11 @@ describe("Sample Test", () => {
     await typeormConnection.synchronize();
   });
 
-  it("should be run with no error", () => {
+  it('should be run with no error', () => {
     expect({}).toBeInstanceOf(Object);
   });
 
-  it("should connect to DBMS", () => {
+  it('should connect to DBMS', () => {
     expect(typeormConnection.isConnected).toBeTruthy();
   });
 
