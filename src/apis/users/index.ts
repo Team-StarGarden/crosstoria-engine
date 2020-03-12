@@ -1,9 +1,12 @@
-import { Router } from 'express';
-import { register, availableID, setPassphrase, authorize } from './user.ctrl';
+import { Router } from "express";
+import * as ctrl from "./user.ctrl";
 
-export let UserRouter = Router();
+export const UserRouter = Router();
 
-UserRouter.post('/register', register);
-UserRouter.post('/availableID', availableID);
-UserRouter.post('/setPassphrase', setPassphrase);
-UserRouter.post('/authorize', authorize);
+UserRouter.post("/register", ctrl.register);
+UserRouter.post("/availableID", ctrl.availableID);
+UserRouter.post("/setPassphrase", ctrl.setPassphrase);
+UserRouter.post("/authorize", ctrl.authorize);
+UserRouter.post("/update", ctrl.update);
+UserRouter.get("/unauthorize", ctrl.unauthorize);
+UserRouter.get("/userInfo", ctrl.userInfo);

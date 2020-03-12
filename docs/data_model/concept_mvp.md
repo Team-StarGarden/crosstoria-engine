@@ -42,7 +42,7 @@
 
 -   relationID (PK)!: string, 설정 고유값(해시).
 -   charProfileItem (FK) !: string, 해당 관계에 대응하는 프로필 항목.
--   charProfileTarget!: string || null, 관계 항목의 대상 캐릭터의 charID.
+-   charProfileTarget (FK): string || null, 관계 항목의 대상 캐릭터의 charID.
 
 ## Thread
 

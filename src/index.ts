@@ -1,6 +1,9 @@
+
 import express, { json, Request, Response } from "express";
 import BaseRouter from "./apis";
 import { config } from "./config";
+
+import session from 'express-session';
 
 import cors from "cors";
 import { createConnection } from "typeorm";
@@ -17,7 +20,13 @@ const corsOptions: cors.CorsOptions = {
 export const app = express();
 app.use(cors(corsOptions));
 app.use(json());
-
+app.use(
+  session({
+    secret: '@#!$^@$crosstoria#@$#$',
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
 app.get("/", (req: Request, res: Response) => {
   res.send({
     msg: "Hello, World!"
