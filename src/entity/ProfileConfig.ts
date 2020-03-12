@@ -1,14 +1,15 @@
-import {Entity, ManyToOne, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {Profile} from './Profile';
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Profile } from "./Profile";
 
 @Entity()
 export class ProfileConfig {
+  @PrimaryColumn()
+  configId!: string;
   @ManyToOne(
-    type => Profile,
-    charProfileItem => charProfileItem.charProfileItem,
+    () => Profile,
+    char => char.charProfileItem
   )
-  charProfileItem!: Profile;
-  @Column({nullable: true, type: String})
+  charProfileItem?: Profile;
+  @Column({ default: null, nullable: true, type: String })
   charProfileWhitelist?: string | null;
 }
-

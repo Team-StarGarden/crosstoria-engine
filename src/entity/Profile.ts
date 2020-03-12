@@ -1,25 +1,21 @@
-import {Entity, ManyToOne, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {Character} from './Character';
+import { Entity, ManyToOne, Column, PrimaryColumn } from "typeorm";
+import { Character } from "./Character";
 
 @Entity()
 export class Profile {
   @ManyToOne(
-    type => Character,
-    charID => charID.charID,
+    () => Character,
+    char => char.charID
   )
-  charID!: Character;
-  @Column({unique: true})
+  charID?: Character;
+  @PrimaryColumn()
   charProfileItem!: string;
   @Column()
-  profileItemName!: string;
-  @PrimaryGeneratedColumn('uuid')
-  profileItem!: string;
+  charProfileTopic!: string;
+  @Column({ default: null, nullable: true, type: String })
+  superItem?: string | null;
   @Column()
-  profileContent!: string;
-  @Column({nullable: true, type: String})
-  superItem!: string | null;
+  charProfileSwitch!: string;
   @Column()
-  charProfileSwitch!: boolean;
-  @Column({nullable: true, type: String})
-  charProfileContents?: string | null;
+  charProfileContent!: string; // should support emoji and custom emoticons
 }

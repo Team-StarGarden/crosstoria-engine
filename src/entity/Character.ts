@@ -1,5 +1,5 @@
-import {Column, Entity, ManyToOne, PrimaryColumn} from 'typeorm';
-import {Users} from './Users';
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Users } from "./Users";
 
 @Entity()
 export class Character {
@@ -7,13 +7,13 @@ export class Character {
   charID!: string;
   @ManyToOne(
     () => Users,
-    userID => userID.email,
+    user => user.userID
   )
   userID?: Users;
   @Column()
   charName!: string; // must support UNICODE
-  @Column({type: String})
-  portraitPath!: string;
+  @Column({ type: String })
+  portraitPath!: string; // path in local file system
   @Column()
   charState!: string;
 }
