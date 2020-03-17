@@ -1,0 +1,37 @@
+name: Node.js CI/CD
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-test-${{ matrix.node-version }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-test-${{ matrix.node-version }}-
+            ${{ runner.OS }}-test-
+            ${{ runner.OS }}-
+      - name: Create DB
+        run: mysql --user=root --password=root -e 'CREATE DATABASE crosstoria;'
+      - name: yarn install
+        run: yarn
+      - name: Check Code style
+        run: yarn lint
+      - name: Test
+        run: yarn test
+        env:
+          TYPEORM_HOST: 127.0.0.1
+          TYPEORM_PORT: 3306
+          TYPEORM_USER: root
+          TYPEORM_PASS: root
+          TYPEORM_DB: crosstoria
